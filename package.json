@@ -1,94 +1,158 @@
 {
-	"name": "git-prefix",
-	"displayName": "Git Prefix",
-	"description": "Prefix commit message with value in branch name.",
-	"version": "1.1.0",
-	"publisher": "srmeyers",
-	"author": {
-		"name": "Samuel Meyers"
-	},
-	"license": "MIT",
-	"homepage": "https://github.com/srmeyers/git-prefix/blob/master/README.md",
-	"bugs": {
-		"url": "https://github.com/srmeyers/git-prefix/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/srmeyers/git-prefix.git"
-	},
-	"engines": {
-		"vscode": "^1.32.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"icon": "images/icon.png",
-	"preview": false,
-	"galleryBanner": {
-		"color": "#f0efe7",
-		"theme": "light"
-	},
-	"keywords": [
-		"git"
-	],
-	"activationEvents": [
-		"onCommand:gitPrefix.setMessage"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"configuration": {
-			"type": "object",
-			"title": "GitPrefix",
-			"properties": {
-				"gitPrefix.pattern": {
-					"type": "string",
-					"default": "(.*)",
-					"description": "A regular expression to extract from branch name. Should match entire branch."
-				},
-				"gitPrefix.patternIgnoreCase": {
-					"type": "boolean",
-					"default": false,
-					"description": "Ignore case in pattern."
-				},
-				"gitPrefix.replacement": {
-					"type": "string",
-					"default": "[$1] ",
-					"description": "Content to place in commit message."
-				}
-			}
-		},
-		"commands": [
-			{
-				"command": "gitPrefix.setMessage",
-				"title": "Git Prefix Commit Message",
-				"icon": {
-					"dark": "images/prefix-commit.svg",
-					"light": "images/prefix-commit_light.svg"
-				}
-			}
-		],
-		"menus": {
-			"scm/title": [
-				{
-					"command": "gitPrefix.setMessage",
-					"when": "scmProvider == git",
-					"group": "navigation"
-				}
-			]
-		}
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "npm run compile && node ./node_modules/vscode/bin/test"
-	},
-	"devDependencies": {
-		"@types/mocha": "^2.2.42",
-		"@types/node": "^10.12.21",
-		"tslint": "^5.17.0",
-		"typescript": "^3.3.1",
-		"vscode": "^1.1.28"
-	}
+  "name": "git-commit-message-helper",
+  "displayName": "Git commit message helper",
+  "description": "Prefix commit message with value in branch name.",
+  "version": "1.2.0",
+  "publisher": "D3skDev",
+  "author": {
+    "name": "Samuel Meyers",
+    "url": "https://github.com/srmeyers"
+  },
+  "contributors": [
+    {
+      "name": "d3skDev",
+      "url": "https://github.com/d3skdev"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/d3skdev/git-prefix/blob/master/README.md",
+  "bugs": {
+    "url": "https://github.com/d3skdev/git-prefix/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d3skdev/git-prefix"
+  },
+  "engines": {
+    "vscode": "^1.32.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "icon": "images/icon.png",
+  "preview": false,
+  "galleryBanner": {
+    "color": "#f0efe7",
+    "theme": "light"
+  },
+  "keywords": [
+    "git"
+  ],
+  "activationEvents": [
+    "onCommand:gitPrefix.setMessage1",
+    "onCommand:gitPrefix.setMessage2",
+    "onCommand:gitPrefix.setMessage3",
+    "onCommand:gitPrefix.setMessage4"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "GitPrefix",
+      "properties": {
+        "gitPrefix.pattern": {
+          "type": "string",
+          "default": "(.*)",
+          "description": "A regular expression to extract from branch name. Should match entire branch."
+        },
+        "gitPrefix.patternIgnoreCase": {
+          "type": "boolean",
+          "default": false,
+          "description": "Ignore case in pattern."
+        },
+        "gitPrefix.replacement #1": {
+          "type": "string",
+          "default": "$1:  Added ",
+          "description": "Content to place in commit message."
+        },
+        "gitPrefix.replacement #2": {
+          "type": "string",
+          "default": "$1:  Updated ",
+          "description": "Content to place in commit message."
+        },
+        "gitPrefix.replacement #3": {
+          "type": "string",
+          "default": "$1: Fixed ",
+          "description": "Content to place in commit message."
+        },
+        "gitPrefix.replacement #4": {
+          "type": "string",
+          "default": "$1 Removed ",
+          "description": "Content to place in commit message."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "gitPrefix.setMessage1",
+        "title": "Git Prefix Commit Message Helper: Added",
+        "icon": {
+          "dark": "images/add-dark.svg",
+          "light": "images/add-light.svg"
+        }
+      },
+      {
+        "command": "gitPrefix.setMessage2",
+        "title": "Git Prefix Commit Message Helper: Updated",
+        "icon": {
+          "dark": "images/update-dark.svg",
+          "light": "images/update-light.svg"
+        }
+      },
+      {
+        "command": "gitPrefix.setMessage3",
+        "title": "Git Prefix Commit Message Helper: Fixed",
+        "icon": {
+          "dark": "images/fix-dark.svg",
+          "light": "images/fix-light.svg"
+        }
+      },
+      {
+        "command": "gitPrefix.setMessage4",
+        "title": "Git Prefix Commit Message Helper: Removed",
+        "icon": {
+          "dark": "images/remove-dark.svg",
+          "light": "images/remove-light.svg"
+        }
+      }
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "command": "gitPrefix.setMessage1",
+          "when": "scmProvider == git",
+          "group": "navigation"
+        },
+        {
+          "command": "gitPrefix.setMessage2",
+          "when": "scmProvider == git",
+          "group": "navigation"
+        },
+        {
+          "command": "gitPrefix.setMessage3",
+          "when": "scmProvider == git",
+          "group": "navigation"
+        },
+        {
+          "command": "gitPrefix.setMessage4",
+          "when": "scmProvider == git",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^10.12.21",
+    "tslint": "^5.17.0",
+    "typescript": "^3.3.1",
+    "vscode": "^1.1.28"
+  }
 }
