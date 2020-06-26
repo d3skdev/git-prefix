@@ -2,6 +2,11 @@
 
 All notable changes to the "git-commit-message-helper" extension will be documented in this file.
 
+### 1.3.0 (2020-06-26)
+
+- Detect branch name created by Jira
+- Improvements
+
 ### 1.2.0 (2019-10-11)
 
 - Added 4 different buttons

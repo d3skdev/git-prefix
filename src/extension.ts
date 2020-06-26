@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.executeCommand("workbench.view.scm");
 
         if (uri) {
-          const selectedRepository = git.repositories.find(repository => {
+          const selectedRepository = git.repositories.find((repository) => {
             return repository.rootUri.path === uri._rootUri.path;
           });
 
@@ -34,9 +34,22 @@ export function activate(context: vscode.ExtensionContext) {
   }
 }
 
+function isJiraFormat(string: string): string {
+  const pattern = vscode.workspace.getConfiguration().get("gitPrefix.pattern");
+
+  if (pattern === "(.*)") {
+    return new RegExp(/(\w+-\d+)/g).test(string) ? "(\\w+-\\d+)" : "(.*)";
+  } else {
+    return vscode.workspace
+      .getConfiguration()
+      .get("gitPrefix.pattern") as string;
+  }
+}
+
 async function prefixCommit(repository: Repository, index: number) {
-  const prefixPattern: string =
-    vscode.workspace.getConfiguration().get("gitPrefix.pattern") || "(.*)";
+  const branchName =
+    (repository.state.HEAD && repository.state.HEAD.name) || "";
+  const prefixPattern: string = isJiraFormat(branchName);
   const ignoreCase: boolean =
     vscode.workspace.getConfiguration().get("gitPrefix.patternIgnoreCase") ||
     false;
@@ -47,13 +60,11 @@ async function prefixCommit(repository: Repository, index: number) {
     vscode.workspace
       .getConfiguration()
       .get(`gitPrefix.replacement #${index}`) || "[$1]* ";
-  const branchName =
-    (repository.state.HEAD && repository.state.HEAD.name) || "";
 
   if (branchRegEx.test(branchName)) {
     const match = branchName.match(branchRegEx)![0];
     const ticket = match.replace(branchRegEx, prefixReplacement);
-    console.log({ branchName, ticket });
+    console.log({ branchName, ticket, match, prefixReplacement });
     repository.inputBox.value = `${ticket}${repository.inputBox.value}`;
   } else {
     const message = `Pattern ${prefixPattern} not found in branch ${branchName}`;
